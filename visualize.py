@@ -2,40 +2,48 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Load the CSV file
+# Load data
 df = pd.read_csv("sample_data.csv")
-
-# Set style
 sns.set(style="whitegrid")
 
-# -------- 1. Bar Chart: Total Value per Category --------
-category_totals = df.groupby("Category")["Value"].sum().sort_values(ascending=False)
+# Prepare data
+subcategory_totals = df.groupby("Subcategory")["Value"].sum().sort_values()
+category_totals = df.groupby("Category")["Value"].sum().sort_values()
 
-plt.figure(figsize=(10, 6))
-sns.barplot(x=category_totals.values, y=category_totals.index, palette="Blues_d")
-plt.title("Total Value by Category")
-plt.xlabel("Value")
-plt.ylabel("Category")
-plt.tight_layout()
-plt.savefig("bar_chart_category.png")
+# Create figure and axes with custom layout
+fig, axes = plt.subplots(2, 2, figsize=(18, 12), gridspec_kw={'height_ratios': [1.2, 1]})
+
+# -------- Top Left: Horizontal Bar Chart --------
+sns.barplot(x=subcategory_totals.values, y=subcategory_totals.index, palette="viridis", ax=axes[0, 0])
+axes[0, 0].set_title("Total Value by Subcategory", fontsize=14)
+axes[0, 0].set_xlabel("Total Value", fontsize=12)
+axes[0, 0].set_ylabel("Subcategory", fontsize=12)
+
+# -------- Top Right: Boxplot --------
+sns.boxplot(data=df, x="Category", y="Value", palette="Set3", ax=axes[0, 1])
+axes[0, 1].set_title("Value Distribution by Category", fontsize=14)
+axes[0, 1].set_xlabel("Category", fontsize=12)
+axes[0, 1].set_ylabel("Value", fontsize=12)
+axes[0, 1].tick_params(axis='x', rotation=30)
+
+# -------- Bottom Left: Pie Chart --------
+axes[1, 0].pie(category_totals.values, labels=category_totals.index, autopct='%1.1f%%',
+               startangle=140, colors=sns.color_palette("pastel"), textprops={'fontsize': 10})
+axes[1, 0].set_title("Category Share (Pie Chart)", fontsize=14)
+
+# -------- Bottom Right: Strip Plot --------
+sns.stripplot(data=df, x="Category", y="Value", hue="Subcategory", dodge=True, jitter=True,
+              palette="Set2", ax=axes[1, 1])
+axes[1, 1].set_title("Value Spread by Category & Subcategory", fontsize=14)
+axes[1, 1].set_xlabel("Category", fontsize=12)
+axes[1, 1].set_ylabel("Value", fontsize=12)
+axes[1, 1].tick_params(axis='x', rotation=30)
+
+# Move legend outside the strip plot
+axes[1, 1].legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize='small', title='Subcategory')
+
+# Adjust layout
+plt.tight_layout(rect=[0, 0, 0.95, 1])  # Leave space for legend on the right
+plt.savefig("clean_dashboard.png", dpi=300)
 plt.show()
-
-# -------- 2. Grouped Bar Chart: Subcategories per Category --------
-plt.figure(figsize=(12, 6))
-sns.barplot(data=df, x="Category", y="Value", hue="Subcategory", palette="tab20")
-plt.title("Subcategory Values by Category")
-plt.xticks(rotation=45)
-plt.tight_layout()
-plt.savefig("grouped_bar_chart.png")
-plt.show()
-
-# -------- 3. Pie Chart: Share by Category --------
-plt.figure(figsize=(8, 8))
-plt.pie(category_totals.values, labels=category_totals.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("pastel"))
-plt.title("Category Share (Pie Chart)")
-plt.tight_layout()
-plt.savefig("pie_chart_category.png")
-plt.show()
-
-#----End Of Cell----
 
