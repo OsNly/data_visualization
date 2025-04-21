@@ -1,10 +1,10 @@
-# Ignore VE 
+# Ignore Virtual environment
 venv/ 
-ECHO is on.
+
 # Ignore python cache files 
 __pycache__/ 
 *.pyc 
-ECHO is on.
+
 # Ignore IDE/editor settings 
 .vscode/ 
 *.log 
