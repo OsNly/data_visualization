@@ -1,0 +1,28 @@
+Category,Subcategory,Value
+Technology,Software,120
+Technology,Hardware,85
+Technology,AI,150
+Healthcare,Pharmaceuticals,95
+Healthcare,Devices,70
+Healthcare,Biotech,90
+Finance,Banking,80
+Finance,Insurance,65
+Finance,Fintech,100
+Education,Schools,70
+Education,Universities,85
+Education,Online Learning,90
+Entertainment,Movies,65
+Entertainment,Music,55
+Entertainment,Streaming,95
+Retail,E-commerce,130
+Retail,Supermarkets,100
+Retail,Fashion,75
+Transport,Road,85
+Transport,Air,60
+Transport,Rail,50
+Energy,Renewables,110
+Energy,Oil & Gas,95
+Energy,Nuclear,45
+Agriculture,Crops,60
+Agriculture,Livestock,55
+Agriculture,AgTech,40
