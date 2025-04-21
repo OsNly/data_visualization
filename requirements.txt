@@ -1,4 +1,3 @@
-"pandas" 
-"matplotlib" 
-"seaborn" 
-pandas 
+pandas
+matplotlib
+seaborn
